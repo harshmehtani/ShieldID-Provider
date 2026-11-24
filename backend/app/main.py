@@ -1,4 +1,7 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, HTTPException, status, Depends, FastAPI
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+from database import get_db
 
 app = FastAPI(
     title="ShieldID Provider",
