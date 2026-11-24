@@ -63,7 +63,7 @@ export const OrgIdentitiesPage: React.FC = () => {
             Registered Citizen Identities
           </h1>
           <p className="text-sm text-slate-500">
-            Directory of identity holders registered with Decentralized Identifiers
+            View-only directory. Identity managers register citizens; your organization can review their records and issue credentials.
           </p>
         </div>
 

@@ -40,7 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
           { to: '/org/dashboard', label: 'Dashboard', icon: <ChartBar weight="fill" className="w-5 h-5" /> },
           { to: '/org/details', label: 'Organization Details', icon: <Buildings weight="fill" className="w-5 h-5" /> },
           { to: '/org/managers', label: 'Identity Managers', icon: <Users weight="fill" className="w-5 h-5" /> },
-          { to: '/org/identities', label: 'Citizen Identities', icon: <IdentificationCard weight="fill" className="w-5 h-5" /> },
+          { to: '/org/identities', label: 'Citizen Directory', icon: <IdentificationCard weight="fill" className="w-5 h-5" /> },
           { to: '/org/credentials', label: 'Credentials', icon: <Certificate weight="fill" className="w-5 h-5" /> },
           { to: '/org/issue', label: 'Issue Credential', icon: <Certificate weight="fill" className="w-5 h-5" /> },
           { to: '/org/activity', label: 'Activity Log', icon: <Clock weight="fill" className="w-5 h-5" /> },

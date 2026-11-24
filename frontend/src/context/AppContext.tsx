@@ -457,6 +457,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const createIdentity = useCallback(
     (data: { organizationId: string; fullName: string; email: string; dateOfBirth: string; phone?: string; address?: string; idReference?: string; did?: string }) => {
+      if (!currentUser || currentUser.role !== 'identity_manager') {
+        throw new Error('Only identity managers can register citizens.')
+      }
+      if (currentUser.organizationId !== data.organizationId) {
+        throw new Error('Identity managers can register citizens only for their assigned organization.')
+      }
+
       const identityId = uid('idn')
       const citizenUserId = uid('usr-cit')
       const citizenDid = makeDid()
@@ -475,7 +482,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const identity: Identity = {
         id: identityId,
         organizationId: data.organizationId,
-        createdByUserId: state.sessionUserId || '',
+        createdByUserId: currentUser.id,
         fullName: data.fullName.trim(),
         email: cleanEmail,
         phone: data.phone,
@@ -509,8 +516,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           {
             id: uid('aud'),
             organizationId: data.organizationId,
-            userId: prev.sessionUserId || 'sys',
-            userName: prev.users.find((u) => u.id === prev.sessionUserId)?.name || 'Identity Manager',
+            userId: currentUser.id,
+            userName: currentUser.name,
             action: 'REGISTER_CITIZEN',
             resource: 'Identity',
             resourceId: identityId,
@@ -523,7 +530,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       showToast('success', 'Citizen Registered', `Citizen ${data.fullName} registered with DID ${citizenDid}`)
       return identity
     },
-    [showToast, state.sessionUserId, state.users, state.organizations],
+    [currentUser, showToast, state.users, state.organizations],
   )
 
   const issueCredential = useCallback(
